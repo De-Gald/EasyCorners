@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A3FC9F"
+    tools:context="com.example.degald.easycorners.FullscreenActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph2"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph3"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph4"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/dummy_button"
+                android:layout_width="0dp"
+                android:onClick="takeScreenshot"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Take a screenshot" />
+
+            <Button
+                android:id="@+id/share"
+                android:layout_width="0dp"
+                android:onClick="share"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Share graphs" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</FrameLayout>
