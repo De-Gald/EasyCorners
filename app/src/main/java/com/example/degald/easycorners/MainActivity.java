@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
-
 import com.jjoe64.graphview.GraphView;
 
 import org.jsoup.Jsoup;
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterIt(final int indicator) {
-        if (!(mWebView.getProgress() == 100)){
+        if (!(mWebView.getProgress() == 100)) {
             Toast.makeText(MainActivity.this, "The page ain't downloaded yet!!!", Toast.LENGTH_LONG).show();
             return;
         }

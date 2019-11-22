@@ -1,8 +1,10 @@
-package com.example.degald.easycorners.data;
+package com.example.degald.easycorners.utilities;
 
 import android.content.ContentValues;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.degald.easycorners.data.CornersContract;
 
 import java.util.ArrayList;
 import java.util.List;

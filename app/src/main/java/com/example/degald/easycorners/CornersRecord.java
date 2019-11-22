@@ -7,14 +7,14 @@ import android.widget.ImageView;
 
 import java.io.File;
 
-public class Main3Activity extends AppCompatActivity {
+public class CornersRecord extends AppCompatActivity {
 
     ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.corners_screenshot);
 
         imageView = findViewById(R.id.imageView);
 

@@ -9,14 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.Toast;
 
 import com.example.degald.easycorners.data.CornersDbHelper;
-import com.example.degald.easycorners.data.TestUtil;
 import com.example.degald.easycorners.data.CornersContract;
 
 
-public class Main2Activity extends AppCompatActivity implements CornersAdapter.CornersOnClickHandler {
+public class CornersScreenshots extends AppCompatActivity implements CornersAdapter.CornersOnClickHandler {
 
     private CornersAdapter mAdapter;
     private SQLiteDatabase mDb;
@@ -24,7 +22,7 @@ public class Main2Activity extends AppCompatActivity implements CornersAdapter.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.corners_screenshots);
 
         RecyclerView cornersRecyclerView;
 
@@ -62,9 +60,6 @@ public class Main2Activity extends AppCompatActivity implements CornersAdapter.C
             }
 
         }).attachToRecyclerView(cornersRecyclerView);
-//        mDb.delete(CornersContract.WaitlistEntry.TABLE_NAME, null, null);
-
-//        TestUtil.insertFakeData(mDb);
 
     }
 
@@ -95,7 +90,7 @@ public class Main2Activity extends AppCompatActivity implements CornersAdapter.C
 
     @Override
     public void onClick(String pathToFile) {
-        Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+        Intent intent = new Intent(CornersScreenshots.this, CornersRecord.class);
         intent.putExtra(FullscreenActivity.PATH_TO_FILE, pathToFile);
         startActivity(intent);
     }

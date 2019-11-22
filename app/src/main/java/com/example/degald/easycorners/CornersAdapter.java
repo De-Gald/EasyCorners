@@ -13,7 +13,7 @@ import com.example.degald.easycorners.data.CornersContract;
 
 public class CornersAdapter extends RecyclerView.Adapter<CornersAdapter.CornersViewHolder> {
 
-    public interface CornersOnClickHandler{
+    public interface CornersOnClickHandler {
         void onClick(String pathToFile);
     }
 
@@ -74,9 +74,9 @@ public class CornersAdapter extends RecyclerView.Adapter<CornersAdapter.CornersV
 
         @Override
         public void onClick(View view) {
-          mCursor.moveToPosition(getAdapterPosition());
-          String pathToFile = mCursor.getString(2);
-          mCornersOnClickHandler.onClick(pathToFile);
+            mCursor.moveToPosition(getAdapterPosition());
+            String pathToFile = mCursor.getString(2);
+            mCornersOnClickHandler.onClick(pathToFile);
         }
     }
 }
