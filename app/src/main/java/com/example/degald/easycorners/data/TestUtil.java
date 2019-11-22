@@ -9,55 +9,47 @@ import java.util.List;
 
 public class TestUtil {
 
-    public static void insertFakeData(SQLiteDatabase db){
-        if(db == null){
+    public static void insertFakeData(SQLiteDatabase db) {
+        if (db == null) {
             return;
         }
-        //create a list of fake guests
         List<ContentValues> list = new ArrayList<ContentValues>();
 
         ContentValues cv = new ContentValues();
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, "John");
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE, 12);
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, "Tim");
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE, 2);
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, "Jessica");
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE, 99);
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, "Larry");
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE, 1);
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, "Kim");
-        cv.put(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE, 45);
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
         list.add(cv);
 
-        //insert all guests in one transaction
-        try
-        {
+        try {
             db.beginTransaction();
-            //clear the table first
-            db.delete (WaitlistContract.WaitlistEntry.TABLE_NAME,null,null);
-            //go through the list and add one by one
-            for(ContentValues c:list){
-                db.insert(WaitlistContract.WaitlistEntry.TABLE_NAME, null, c);
+            db.delete(CornersContract.WaitlistEntry.TABLE_NAME, null, null);
+            for (ContentValues c : list) {
+                db.insert(CornersContract.WaitlistEntry.TABLE_NAME, null, c);
             }
             db.setTransactionSuccessful();
-        }
-        catch (SQLException e) {
-            //too bad :(
-        }
-        finally
-        {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             db.endTransaction();
         }
 
