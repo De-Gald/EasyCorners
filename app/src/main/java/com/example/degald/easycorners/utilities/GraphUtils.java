@@ -32,10 +32,11 @@ public class GraphUtils {
         graphView.getViewport().setMinY(0);
         graphView.getGridLabelRenderer().setNumHorizontalLabels(21);
         graphView.getGridLabelRenderer().setNumVerticalLabels(16);
+        graphView.setBackgroundColor(Color.WHITE);
 
 
         // styling series
-        series.setColor(Color.GREEN);
+        series.setColor(Color.WHITE);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         series.setThickness(8);

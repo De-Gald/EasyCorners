@@ -1,6 +1,7 @@
 package com.example.degald.easycorners;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,17 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
 import com.example.degald.easycorners.data.CornersDbHelper;
 import com.example.degald.easycorners.data.TestUtil;
 import com.example.degald.easycorners.data.CornersContract;
 
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements CornersAdapter.CornersOnClickHandler {
 
     private CornersAdapter mAdapter;
     private SQLiteDatabase mDb;
-    private final static String LOG_TAG = Main2Activity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +33,19 @@ public class Main2Activity extends AppCompatActivity {
         cornersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        // Create a DB helper (this will create the DB if run for the first time)
         CornersDbHelper dbHelper = new CornersDbHelper(this);
 
         mDb = dbHelper.getWritableDatabase();
 
-        // Get all corners info from the database and save in a cursor
-        Cursor cursor = getAllGuests();
+        Cursor cursor = getAllCornersData();
 
-        mAdapter = new CornersAdapter(this, cursor);
+        mAdapter = new CornersAdapter(this, cursor, this);
 
-        // Link the adapter to the RecyclerView
         cornersRecyclerView.setAdapter(mAdapter);
+
+        String path_to_Screenshot = getIntent().getStringExtra(FullscreenActivity.PATH_TO_FILE);
+        String team = getIntent().getStringExtra(MainActivity.TITLE_ID);
+        addNewRecord(team, path_to_Screenshot);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -56,17 +58,18 @@ public class Main2Activity extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 long id = (long) viewHolder.itemView.getTag();
                 removeCornersRecord(id);
-                mAdapter.swapCursor(getAllGuests());
+                mAdapter.swapCursor(getAllCornersData());
             }
 
         }).attachToRecyclerView(cornersRecyclerView);
+//        mDb.delete(CornersContract.WaitlistEntry.TABLE_NAME, null, null);
 
-        TestUtil.insertFakeData(mDb);
+//        TestUtil.insertFakeData(mDb);
 
     }
 
 
-    private Cursor getAllGuests() {
+    private Cursor getAllCornersData() {
         return mDb.query(
                 CornersContract.WaitlistEntry.TABLE_NAME,
                 null,
@@ -90,4 +93,10 @@ public class Main2Activity extends AppCompatActivity {
         return mDb.delete(CornersContract.WaitlistEntry.TABLE_NAME, CornersContract.WaitlistEntry._ID + "=" + id, null) > 0;
     }
 
+    @Override
+    public void onClick(String pathToFile) {
+        Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+        intent.putExtra(FullscreenActivity.PATH_TO_FILE, pathToFile);
+        startActivity(intent);
+    }
 }

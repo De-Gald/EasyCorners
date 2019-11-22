@@ -23,8 +23,8 @@ public class CornersDbHelper extends SQLiteOpenHelper {
         // Create a table to hold corners data
         final String SQL_CREATE_WAITLIST_TABLE = "CREATE TABLE " + CornersContract.WaitlistEntry.TABLE_NAME + " (" +
                 CornersContract.WaitlistEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                CornersContract.WaitlistEntry.COLUMN_TEAM_NAME + " TEXT NOT NULL, " +
-                CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT + " TEXT NOT NULL, " +
+                CornersContract.WaitlistEntry.COLUMN_TEAM_NAME + " STRING NOT NULL, " +
+                CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT + " STRING NOT NULL, " +
                 CornersContract.WaitlistEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 "); ";
 

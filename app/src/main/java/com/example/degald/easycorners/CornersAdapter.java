@@ -11,25 +11,32 @@ import android.widget.TextView;
 import com.example.degald.easycorners.data.CornersContract;
 
 
-public class CornersAdapter extends RecyclerView.Adapter<CornersAdapter.GuestViewHolder> {
+public class CornersAdapter extends RecyclerView.Adapter<CornersAdapter.CornersViewHolder> {
+
+    public interface CornersOnClickHandler{
+        void onClick(String pathToFile);
+    }
+
+    private CornersOnClickHandler mCornersOnClickHandler;
 
     private Cursor mCursor;
     private Context mContext;
 
-    public CornersAdapter(Context context, Cursor cursor) {
+    public CornersAdapter(Context context, Cursor cursor, CornersOnClickHandler cornersOnClickHandler) {
+        mCornersOnClickHandler = cornersOnClickHandler;
         this.mContext = context;
         this.mCursor = cursor;
     }
 
     @Override
-    public GuestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CornersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.corners_list_item, parent, false);
-        return new GuestViewHolder(view);
+        return new CornersViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(GuestViewHolder holder, int position) {
+    public void onBindViewHolder(CornersViewHolder holder, int position) {
         if (!mCursor.moveToPosition(position))
             return;
 
@@ -55,14 +62,21 @@ public class CornersAdapter extends RecyclerView.Adapter<CornersAdapter.GuestVie
         }
     }
 
-    class GuestViewHolder extends RecyclerView.ViewHolder {
+    class CornersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView teamName;
 
-        public GuestViewHolder(View itemView) {
+        public CornersViewHolder(View itemView) {
             super(itemView);
             teamName = (TextView) itemView.findViewById(R.id.team_data_text_view);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+          mCursor.moveToPosition(getAdapterPosition());
+          String pathToFile = mCursor.getString(2);
+          mCornersOnClickHandler.onClick(pathToFile);
+        }
     }
 }

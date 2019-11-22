@@ -3,18 +3,15 @@ package com.example.degald.easycorners;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.degald.easycorners.utilities.GraphUtils;
 import com.jjoe64.graphview.GraphView;
@@ -26,6 +23,7 @@ import java.util.Date;
 
 public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
+    public static final String PATH_TO_FILE = "pathToFile";
 
     Button mButton;
 
@@ -41,7 +39,6 @@ public class FullscreenActivity extends AppCompatActivity {
 
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
-    private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -80,7 +77,6 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
-            // Delayed display of UI elements
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.show();
@@ -105,6 +101,37 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mGraph.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        mGraph2.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        mGraph3.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        mGraph4.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,12 +185,12 @@ public class FullscreenActivity extends AppCompatActivity {
         }
 
         if (indicator == 1) {
-            GraphUtils.buildGraph(mGraph, list, max, corners, "Outgoing corners, " + title);
+            GraphUtils.buildGraph(mGraph, list, max, corners, "Out. corners, " + title);
             GraphUtils.buildGraph(mGraph2, list2, max2, corners, "Corner difference, " + title);
             GraphUtils.buildGraph(mGraph3, list3, max3, corners, "Double corner difference, " + title);
             GraphUtils.buildGraph(mGraph4, list4, max4, corners, "Triple corner difference, " + title);
         } else {
-            GraphUtils.buildGraph(mGraph, list, max, corners, "Incoming corners, " + title);
+            GraphUtils.buildGraph(mGraph, list, max, corners, "In. corners, " + title);
             GraphUtils.buildGraph(mGraph2, list2, max2, corners, "Corner difference, " + title);
             GraphUtils.buildGraph(mGraph3, list3, max3, corners, "Double corner difference, " + title);
             GraphUtils.buildGraph(mGraph4, list4, max4, corners, "Triple corner difference, " + title);
@@ -202,6 +229,8 @@ public class FullscreenActivity extends AppCompatActivity {
                             mGraph4.setVisibility(View.VISIBLE);
                         } else if (deltaY > MIN_DISTANCE) {
                             toggle();
+                        } else if (deltaY < -1 * MIN_DISTANCE) {
+                            saveToDatabase(mGraph.getTitle());
                         }
                         break;
                 }
@@ -235,6 +264,8 @@ public class FullscreenActivity extends AppCompatActivity {
                             mGraph4.setVisibility(View.GONE);
                         } else if (deltaY > MIN_DISTANCE) {
                             toggle();
+                        } else if (deltaY < -1 * MIN_DISTANCE) {
+                            saveToDatabase(mGraph2.getTitle());
                         }
                         break;
                 }
@@ -268,6 +299,8 @@ public class FullscreenActivity extends AppCompatActivity {
                             mGraph4.setVisibility(View.GONE);
                         } else if (deltaY > MIN_DISTANCE) {
                             toggle();
+                        } else if (deltaY < -1 * MIN_DISTANCE) {
+                            saveToDatabase(mGraph3.getTitle());
                         }
                         break;
                 }
@@ -301,6 +334,8 @@ public class FullscreenActivity extends AppCompatActivity {
                             mGraph4.setVisibility(View.GONE);
                         } else if (deltaY > MIN_DISTANCE) {
                             toggle();
+                        } else if (deltaY < -1 * MIN_DISTANCE) {
+                            saveToDatabase(mGraph4.getTitle());
                         }
                         break;
                 }
@@ -313,10 +348,6 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
         delayedHide(100);
     }
 
@@ -325,8 +356,14 @@ public class FullscreenActivity extends AppCompatActivity {
         share(new View(this));
     }
 
+    protected void saveToDatabase(String title) {
+        takeScreenshot(new View(this));
+        addToDatabase(title);
+    }
+
+
+
     private void hide() {
-        // Hide UI first
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -334,39 +371,17 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    @SuppressLint("InlinedApi")
-    private void show() {
-        // Show the system bar
-        mGraph.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mGraph2.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mGraph3.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mGraph4.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mVisible = true;
 
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-    }
 
-    /**
-     * Schedules a call to hide() in delay milliseconds, canceling any
-     * previously scheduled calls.
-     */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private ImageView iv;
     private String sharePath = "no";
 
 
@@ -375,10 +390,8 @@ public class FullscreenActivity extends AppCompatActivity {
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
         try {
-            // image naming and path  to include sd card  appending name you choose for file
             String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpeg";
 
-            // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();
             v1.setDrawingCacheEnabled(true);
             Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
@@ -392,28 +405,29 @@ public class FullscreenActivity extends AppCompatActivity {
             outputStream.flush();
             outputStream.close();
 
-            //setting screenshot in imageview
             String filePath = imageFile.getPath();
-
-            Bitmap ssbitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-//            iv.setImageBitmap(ssbitmap);
             sharePath = filePath;
 
         } catch (Throwable e) {
-            // Several error may come out with file handling or DOM
             e.printStackTrace();
         }
     }
 
 
     public void share(View view) {
-
-        Log.d("ffff", sharePath);
         File file = new File(sharePath);
         Uri uri = Uri.fromFile(file);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(intent);
+
+    }
+
+    public void addToDatabase(String title) {
+        Intent intent = new Intent(FullscreenActivity.this, Main2Activity.class);
+        intent.putExtra(PATH_TO_FILE, sharePath);
+        intent.putExtra(MainActivity.TITLE_ID, title);
         startActivity(intent);
 
     }

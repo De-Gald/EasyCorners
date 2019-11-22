@@ -21,23 +21,23 @@ public class TestUtil {
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
-        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona2");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file2");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
-        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona3");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file3");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
-        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona4");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file4");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona");
-        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_TEAM_NAME, "Barselona5");
+        cv.put(CornersContract.WaitlistEntry.COLUMN_PATH_TO_SCREENSHOT, "path to file5");
         list.add(cv);
 
         try {
