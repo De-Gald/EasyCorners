@@ -36,6 +36,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
 
     Button mButton;
+    public static final String PATH_TO_FILE = "dsflkasf";
 
     private GraphView mGraph;
     private GraphView mGraph2;
