@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 if (url.equals("https://corner-stats.com/index.php?route=account/login&amp;red_route=")) {
                     view.loadUrl("javascript: {" +
                             "  var form = document.getElementById('login');" +
-                            "  form.getElementsByTagName('input')[0].value = 'rizzborngood@gmail.com';" +
-                            "  form.getElementsByTagName('input')[1].value = 'UhttlBpUjjl';" +
+                            "  form.getElementsByTagName('input')[0].value = '******';" +
+                            "  form.getElementsByTagName('input')[1].value = '******';" +
                             "  document.forms['login'].submit();" +
                             "}");
                     view.loadUrl("javascript: {document.getElementById('mob-filtr').click();");
